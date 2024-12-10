@@ -1,0 +1,69 @@
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    private int playerCount = 0;
+
+    
+    private struct Player
+    {
+        public string playerName;
+        public int health;
+
+        public Player(string name, int initialHealth)
+        {
+            playerName = name;
+            health = initialHealth;
+        }
+    }
+
+    void Start()
+    {
+       
+        Player player1 = InitializePlayer("Player 1", 100);
+        Player player2 = InitializePlayer("Player 2", 80);
+
+       
+        player1 = Heal(player1, 20); 
+        player1 = Heal(player1);    
+
+        player2 = Heal(player2, 15); 
+        player2 = Heal(player2);    
+
+        
+        ShowPlayerCount();
+    }
+
+    
+    private Player InitializePlayer(string name, int initialHealth)
+    {
+        playerCount++;
+        Debug.Log($"Initialized {name} with health {initialHealth}");
+        return new Player(name, initialHealth);
+    }
+
+    
+    private Player Heal(Player player, int amount)
+    {
+        player.health += amount;
+        Debug.Log($"{player.playerName} healed by {amount}. Current health: {player.health}");
+        return player;
+    }
+
+    
+    private Player Heal(Player player)
+    {
+        const int defaultHeal = 10;
+        player.health += defaultHeal;
+        Debug.Log($"{player.playerName} healed by {defaultHeal}. Current health: {player.health}");
+        return player;
+    }
+
+    
+    private void ShowPlayerCount()
+    {
+        Debug.Log($"Total Players: {playerCount}");
+    }
+}
+
+
